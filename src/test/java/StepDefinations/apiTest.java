@@ -42,7 +42,7 @@ public class apiTest {
             response.then().body("userId",equalTo(5)).body("title",equalTo("New Post Title"));
     }
     @Then("the response status code should be {int}")
-    public void the_response_status_code_should_be(Integer int1) {
+    public void the_response_status_code_should_be(Integer val) {
         // Write code here that turns the phrase above into concrete actions
     }
     @Given("a post with title {string} exists")
