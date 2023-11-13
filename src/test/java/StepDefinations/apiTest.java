@@ -20,6 +20,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class apiTest {
     private static Response response;
+    String zipcode;
     private static final String baseUrl = "https://jsonplaceholder.typicode.com/";
     @Given("the base API URL is {string}")
     public void the_base_api_url_is(String string) {
@@ -71,20 +72,23 @@ public class apiTest {
         RestAssured.baseURI = baseUrl;
         response = RestAssured.get(endpoint);
         Assert.assertEquals(200,response.statusCode());
-        String zipcode = response
+    }
+    @Then("zipcode should be numeric")
+    public void zipcode_should_be_numeric() {
+        // Write code here that turns the phrase above into concrete actions
+        zipcode = response
                 .jsonPath()
                 .getString("find { it.id == 1 }.address.zipcode");
         Assert.assertNotNull(zipcode);
         assertTrue(zipcode.matches("[\\d-]+"));
         response.then().log().all();
-
-    }
-    @Then("zipcode should be numeric")
-    public void zipcode_should_be_numeric() {
-        // Write code here that turns the phrase above into concrete actions
     }
     @Then("zipcode should be > than {int}")
     public void zipcode_should_be_than(Integer val) {
         // Write code here that turns the phrase above into concrete actions
+        // Convert the zipcode to a numeric value
+        int numericZipcode = Integer.parseInt(zipcode.replaceAll("[^\\d]", ""));
+        //Assert.assertTrue(numericZipcode > val, "Zipcode should be greater than 0");
+        assertTrue(numericZipcode>val);
     }
 }

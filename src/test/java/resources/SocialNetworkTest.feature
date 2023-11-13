@@ -19,4 +19,4 @@ Feature: User can make a post and comment on social network website.
     Then the response status code should be 200
     And zipcode should be numeric
     And zipcode should be > than 0
-
+    #We Can similarly check for other parameters and values of the json body we get in GET request.
