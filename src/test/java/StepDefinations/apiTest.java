@@ -6,33 +6,21 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
-import org.junit.runner.Request;
 import resources.commentOnPost;
 
 
 
 import resources.post;
 import static org.junit.Assert.assertTrue;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class apiTest {
-    private RequestSpecification request;
     private static Response response;
-    private int userId = 1;
     private static final String baseUrl = "https://jsonplaceholder.typicode.com/";
-    private int id = 1;
-    List<Response> multiple_posts_res_list;
-    private String title = "New Post Title";
-    private String body  = "this is post number 1";
     @Given("the base API URL is {string}")
     public void the_base_api_url_is(String string) {
         // Write code here that turns the phrase above into concrete actions
@@ -48,8 +36,8 @@ public class apiTest {
             int id = Integer.parseInt(dataTable.cell(1, 1));
             String title = dataTable.cell(1, 2);
             String body = dataTable.cell(1, 3);
-            post pt = new post(userId,id,title,body);
-            response = given().contentType(ContentType.JSON).body(pt).post(endpoint);
+            post message = new post(userId,id,title,body);
+            response = given().contentType(ContentType.JSON).body(message).post(endpoint);
             Assert.assertEquals(201,response.statusCode());
             response.then().body("userId",equalTo(5)).body("title",equalTo("New Post Title"));
     }
@@ -70,8 +58,8 @@ public class apiTest {
         String name = dataTable.cell(1, 2);
         String email = dataTable.cell(1, 3);
         String body = dataTable.cell(1, 4);
-        commentOnPost cm = new commentOnPost(postId,id,name,email,body);
-        response = given().contentType(ContentType.JSON).body(cm).post(comment);
+        commentOnPost message = new commentOnPost(postId,id,name,email,body);
+        response = given().contentType(ContentType.JSON).body(message).post(comment);
         Assert.assertEquals(201,response.statusCode());
         response.then().body("postId",equalTo(1)).body("email",equalTo("comment@example.com"))
                 .body("body",equalTo("This is a comment"));
@@ -96,7 +84,7 @@ public class apiTest {
         // Write code here that turns the phrase above into concrete actions
     }
     @Then("zipcode should be > than {int}")
-    public void zipcode_should_be_than(Integer int1) {
+    public void zipcode_should_be_than(Integer val) {
         // Write code here that turns the phrase above into concrete actions
     }
 }
