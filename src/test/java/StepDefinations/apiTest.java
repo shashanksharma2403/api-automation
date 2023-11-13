@@ -88,7 +88,6 @@ public class apiTest {
         // Write code here that turns the phrase above into concrete actions
         // Convert the zipcode to a numeric value
         int numericZipcode = Integer.parseInt(zipcode.replaceAll("[^\\d]", ""));
-        //Assert.assertTrue(numericZipcode > val, "Zipcode should be greater than 0");
         assertTrue(numericZipcode>val);
     }
 }
